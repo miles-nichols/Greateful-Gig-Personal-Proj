@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4CAF50</color> <!-- Replace #4CAF50 with your desired color -->
+    <color name="colorPrimaryDark">#388E3C</color> <!-- Optional, for dark mode -->
+    <color name="colorAccent">#FF4081</color> <!-- Optional, for accents -->
+
+
+    <!-- Gold Theme -->
+    <color name="gold">#FFD700</color>
+
+    <!-- Green Theme -->
+    <color name="green">#4CAF50</color>
+
+    <!-- Blue Theme -->
+    <color name="blue">#2196F3</color>
+
+    <!-- Define missing colors -->
+    <color name="purple_200">#BB86FC</color>
+    <color name="purple_500">#6200EE</color>
+    <color name="purple_700">#3700B3</color>
+    <color name="teal_200">#03DAC5</color>
+    <color name="teal_700">#018786</color>
+
+    <color name="white">#FFFFFF</color>  <!-- White -->
+    <color name="black">#000000</color> <!-- Black -->
+
+    <color name="dark_forest_green">#0B3D0B</color>
+    <color name="sage_green">#A8BCA4</color>
+    <color name="sparkle_gold">#FFD700</color>
+
+</resources>
