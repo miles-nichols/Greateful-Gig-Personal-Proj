@@ -38,6 +38,6 @@
         <activity
             android:name=".MainA"
             android:exported="true"
-            android:theme="@style/Theme.GratefulGig" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 </manifest>

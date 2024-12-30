@@ -44,12 +44,6 @@ public class SignupA extends AppCompatActivity {
 
         if (isInputValid(username, password, confirmPassword, email)) {
             makeRequest(BASE_URL, username, password, email);
-
-            //create user to access across the rest of the app
-            UserO user = new UserO();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setEmail(email);
         }
     }
 
