@@ -28,14 +28,9 @@ public class LoginA extends AppCompatActivity {
     private Button signupButton;
     private static String USERNAME;
     private static String PASSWORD;
-    private static String role;
+    private String url = "http://10.0.2.2:8080/api/auth/login";
 
-    private String url = "http://coms-3090-014.class.las.iastate.edu:8080/user/login";
 
-    /**
-     * Initializes the login activity, sets up the UI elements and listeners for login and sign-up buttons.
-     * @param savedInstanceState The saved instance state of the activity.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +41,7 @@ public class LoginA extends AppCompatActivity {
         loginButton = findViewById(R.id.login_login_btn);
         signupButton = findViewById(R.id.login_signup_btn);
 
+        //set text boxes to empty
         usernameEditText.setText("");
         passwordEditText.setText("");
 
@@ -56,7 +52,6 @@ public class LoginA extends AppCompatActivity {
                 String password = passwordEditText.getText().toString();
                 USERNAME = username;
                 PASSWORD = password;
-                fetchUserRole(username, password);
             }
         });
         signupButton.setOnClickListener(new View.OnClickListener() {
@@ -117,69 +112,5 @@ public class LoginA extends AppCompatActivity {
                 }
         );
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-    }
-
-    /**
-     * Retrieves the username entered by the user.
-     * @return The username as a string.
-     */
-    public static String getUsername() {
-        return USERNAME;
-    }
-
-    /**
-     * Retrieves the password entered by the user.
-     * @return The password as a string.
-     */
-    public static String getPassword() {
-        return PASSWORD;
-    }
-
-    public void setUsername(String username) {
-        USERNAME = username;
-    }
-
-    private void fetchUserRole(final String username, final String password) {
-        String url = "http://coms-3090-014.class.las.iastate.edu:8080/user/role?username=" + username;
-        StringRequest request = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    String role = response.trim().replace("\"", "").toUpperCase();
-                    handleUserRole(role, username, password);
-                },
-                error -> {
-                    error.printStackTrace();
-                    Toast.makeText(this, "Failed to fetch role", Toast.LENGTH_SHORT).show();
-                });
-
-        Volley.newRequestQueue(this).add(request);
-    }
-
-
-
-
-    private void handleUserRole(String role, String username, String password) {
-        Log.d("Role", "Fetched role: " + role);  // Log the role for debugging
-
-        switch (role) {
-            case "ADMIN":
-            case "TRAINER":
-            case "USER":
-                setRole(role);  // Save role
-                makeJsonArrayReq(username, password);  // Proceed with login
-                break;
-            default:
-                Log.e("Role Error", "Unknown role: " + role);  // Log the unknown role
-                Toast.makeText(this, "Unknown role: " + role, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-
-    public static String getUserLevel() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }

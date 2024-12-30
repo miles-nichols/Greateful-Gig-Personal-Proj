@@ -16,7 +16,7 @@
         android:layout_height="76dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Gratful Gig"
+        android:text="Grateful Gig"
         android:textColor="@android:color/black"
         android:textSize="50sp"
         android:textStyle="bold" />
