@@ -1,13 +1,14 @@
 package com.example.backend.Users;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.backend.Grats.Grat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "app_user")
@@ -28,10 +29,12 @@ public class User {
 
     private LocalDate birthdate;
 
-    public User() {
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Grat> grats;
 
-    // Parameterized constructor
+    public User() { }
+
     public User(String username, String password, String email, LocalDate birthdate) {
         this.username = username;
         this.password = password;
@@ -39,7 +42,6 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    // Getters and setters
     public String getUsername() {
         return username;
     }
@@ -70,5 +72,13 @@ public class User {
 
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public List<Grat> getGrats() {
+        return grats;
+    }
+
+    public void setGrats(List<Grat> grats) {
+        this.grats = grats;
     }
 }

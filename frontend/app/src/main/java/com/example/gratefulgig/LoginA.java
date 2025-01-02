@@ -28,7 +28,7 @@ public class LoginA extends AppCompatActivity {
     private EditText passwordEditText;
     private Button loginButton;
     private Button signupButton;
-    private String url = "http://10.0.2.2:8080/api/auth/login";
+    private String url = "http://10.0.2.2:8080/user/login";
 
 
     @Override

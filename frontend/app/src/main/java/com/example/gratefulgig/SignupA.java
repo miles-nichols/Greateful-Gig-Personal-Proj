@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class SignupA extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
-    private static final String BASE_URL = "http://10.0.2.2:8080/api/auth/register";
+    private static final String BASE_URL = "http://10.0.2.2:8080/user/register";
     private EditText etUsername, etPassword, etConfirmPassword, etEmail;
     private Button btnSignup;
 
