@@ -2,7 +2,7 @@ package com.example.gratefulgig;
 
 import java.time.LocalDate;
 
-public class UserO {
+public class User {
     private String username;
     private String password;
     private String email;

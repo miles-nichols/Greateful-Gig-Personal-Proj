@@ -15,20 +15,21 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginA extends AppCompatActivity {
+public class ActivityLogin extends AppCompatActivity {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
     private Button signupButton;
     private String url = "http://10.0.2.2:8080/user/login";
+    private static String USERNAME;
+    private static String PASSWORD;
 
 
     @Override
@@ -48,24 +49,19 @@ public class LoginA extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //create user to access across the rest of the app
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                UserO user = new UserO();
-                user.setUsername(username);
-                user.setPassword(password);
-                if (username.isEmpty()) {
-                    Toast.makeText(LoginA.this, "Username is required", Toast.LENGTH_SHORT).show();
+                USERNAME = usernameEditText.getText().toString();
+                PASSWORD = passwordEditText.getText().toString();
+                if (USERNAME.isEmpty()) {
+                    Toast.makeText(ActivityLogin.this, "Username is required", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                sendLoginRequest(username, password);
+                sendLoginRequest(USERNAME, PASSWORD);
             }
         });
-
-            // Signup button click listener
         signupButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(LoginA.this, SignupA.class);
+                    Intent intent = new Intent(ActivityLogin.this, ActivitySignup.class);
                     startActivity(intent);
                 }
             });
@@ -83,15 +79,15 @@ public class LoginA extends AppCompatActivity {
                         // Handle the response as a plain string
                         if ("Login successful".equals(response)) {
                             // Navigate to the main screen on successful login
-                            Intent intent = new Intent(LoginA.this, MainA.class);
+                            Intent intent = new Intent(ActivityLogin.this, ActivityMain.class);
                             startActivity(intent);
                             finish();  // Close the login screen
                         } else if (response.contains("User not found")) {
-                            Toast.makeText(LoginA.this, "Account does not exist. Please sign up.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityLogin.this, "Account does not exist. Please sign up.", Toast.LENGTH_SHORT).show();
                         } else if ("Too many strikes".equals(response)) {
-                            Toast.makeText(LoginA.this, "This account has been banned.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityLogin.this, "This account has been banned.", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(LoginA.this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityLogin.this, "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -99,7 +95,7 @@ public class LoginA extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley Error", error.toString());
-                        Toast.makeText(LoginA.this, "Error occurred, please try again later", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityLogin.this, "Error occurred, please try again later", Toast.LENGTH_SHORT).show();
                     }
                 }
         ) {
@@ -128,4 +124,7 @@ public class LoginA extends AppCompatActivity {
         return requestBody;
     }
 
+    static String getUsername(){
+        return USERNAME;
+    }
 }

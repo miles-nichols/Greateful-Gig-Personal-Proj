@@ -11,12 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SignupA extends AppCompatActivity {
+public class ActivitySignup extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
     private static final String BASE_URL = "http://10.0.2.2:8080/user/register";
@@ -108,7 +107,7 @@ public class SignupA extends AppCompatActivity {
         try {
             String responseMessage = response.getString("message");
             showToast(responseMessage);
-            Intent intent = new Intent(SignupA.this, LoginA.class);
+            Intent intent = new Intent(ActivitySignup.this, ActivityLogin.class);
             startActivity(intent);
             finish();
         } catch (JSONException e) {
@@ -118,6 +117,6 @@ public class SignupA extends AppCompatActivity {
     }
 
     private void showToast(String message) {
-        Toast.makeText(SignupA.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(ActivitySignup.this, message, Toast.LENGTH_SHORT).show();
     }
 }

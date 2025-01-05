@@ -1,5 +1,6 @@
 package com.example.backend.Users;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,36 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(null); // Or return a custom error message
         }
+    }
+
+    @Operation(summary="Gets User's Friends")
+    @GetMapping("/user/friend/{username}")
+    public Set<User> getFriends(@PathVariable String username) {
+        return userService.getUserFriends(username);
+    }
+
+    @Operation(summary="Gets User's Followers")
+    @GetMapping("/user/followers/{username}")
+    public Set<User> getFollowers(@PathVariable String username) {
+        return userService.getUserFollowers(username);
+    }
+
+    @Operation(summary="Gets Users who User is Following")
+    @GetMapping("/user/following/{username}")
+    public Set<User> getFollowing(@PathVariable String username) {
+        return userService.getUserFollowing(username);
+    }
+
+
+    @Operation(summary="follower_username unfollows following_username")
+    @PutMapping("/user/unfollow")
+    public Map<String, String> unfollow(@RequestParam String follower_username, @RequestParam String following_username) {
+        return userService.unfollowUser(follower_username, following_username);
+    }
+
+    @Operation(summary="follower_username follows following_username")
+    @PutMapping("/user/follow")
+    public Map<String, String> follow(@RequestParam String follower_username, @RequestParam String following_username) {
+        return userService.followUser(follower_username, following_username);
     }
 }
