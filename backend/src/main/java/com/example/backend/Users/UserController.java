@@ -53,33 +53,39 @@ public class UserController {
     }
 
     @Operation(summary="Gets User's Friends")
-    @GetMapping("/user/friend/{username}")
+    @GetMapping("/friend/{username}")
     public Set<User> getFriends(@PathVariable String username) {
         return userService.getUserFriends(username);
     }
 
     @Operation(summary="Gets User's Followers")
-    @GetMapping("/user/followers/{username}")
+    @GetMapping("/followers/{username}")
     public Set<User> getFollowers(@PathVariable String username) {
         return userService.getUserFollowers(username);
     }
 
     @Operation(summary="Gets Users who User is Following")
-    @GetMapping("/user/following/{username}")
+    @GetMapping("/following/{username}")
     public Set<User> getFollowing(@PathVariable String username) {
         return userService.getUserFollowing(username);
     }
 
 
     @Operation(summary="follower_username unfollows following_username")
-    @PutMapping("/user/unfollow")
+    @PutMapping("/unfollow")
     public Map<String, String> unfollow(@RequestParam String follower_username, @RequestParam String following_username) {
         return userService.unfollowUser(follower_username, following_username);
     }
 
     @Operation(summary="follower_username follows following_username")
-    @PutMapping("/user/follow")
+    @PutMapping("/follow")
     public Map<String, String> follow(@RequestParam String follower_username, @RequestParam String following_username) {
         return userService.followUser(follower_username, following_username);
+    }
+
+    @Operation(summary="Used to search for users with first part of their username")
+    @GetMapping(path="/search/{part_username}")
+    public List<User> searchUser(@PathVariable String part_username) {
+        return userService.searchUsers(part_username);
     }
 }
