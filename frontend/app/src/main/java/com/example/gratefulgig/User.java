@@ -1,13 +1,15 @@
 package com.example.gratefulgig;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class User {
     private String username;
-    private String password;
+    private String password; // Not secure, consider only using hashed passwords or omitting this field
     private String email;
-    private LocalDate birthdate;
+    private String birthdate; // Nullable
+    private List<Grat> grats;
 
+    // Getters and setters
     public String getUsername() {
         return username;
     }
@@ -32,11 +34,19 @@ public class User {
         this.email = email;
     }
 
-    public LocalDate getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public List<Grat> getGrats() {
+        return grats;
+    }
+
+    public void setGrats(List<Grat> grats) {
+        this.grats = grats;
     }
 }

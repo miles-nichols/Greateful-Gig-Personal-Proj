@@ -4,6 +4,7 @@ import com.example.backend.Users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "app_grat")
@@ -21,10 +22,20 @@ public class Grat {
 
     private LocalDate gratDate;
 
+    // Many-to-one relationship: Each Grat is created by one User
     @ManyToOne
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "user_username") // Join using the username of the user who created the Grat
     private User user;
 
+    @ManyToMany
+    @JoinTable(
+            name = "grat_users",
+            joinColumns = @JoinColumn(name = "grat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> users;
+
+    // Constructors
     public Grat() {}
 
     public Grat(String gratName, String gratDescription, LocalDate gratDate, User user) {
@@ -32,8 +43,10 @@ public class Grat {
         this.gratDescription = gratDescription;
         this.gratDate = gratDate;
         this.user = user;
+        this.users = users;
     }
 
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -72,5 +85,13 @@ public class Grat {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

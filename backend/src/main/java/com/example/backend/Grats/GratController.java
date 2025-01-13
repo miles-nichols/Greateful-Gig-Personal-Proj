@@ -1,5 +1,7 @@
 package com.example.backend.Grats;
 
+import com.example.backend.Users.User;
+import com.example.backend.Users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +28,21 @@ public class GratController {
         }
     }
 
-    // GET endpoint to get all Grats for a user
+    // GET endpoint to get all Grats for CURRENT user
     @GetMapping("/getGrats/{username}")
     public ResponseEntity<List<Grat>> getGrats(@PathVariable String username) {
         List<Grat> grats = gratService.getGratsByUser(username);
         return ResponseEntity.ok(grats);
+    }
+
+    //GET endpoint to get all Grats for friends and current user
+    @GetMapping("/userfriends/{username}")
+    public ResponseEntity<List<Grat>> getUserAndFriendsGrats(@PathVariable String username) {
+        List<Grat> grats = gratService.getGratsForUserAndFriends(username);
+
+        if (grats.isEmpty()) {
+            return ResponseEntity.noContent().build();  // 204 NO_CONTENT if no grats found
+        }
+        return ResponseEntity.ok(grats);  // 200 OK if grats are found
     }
 }

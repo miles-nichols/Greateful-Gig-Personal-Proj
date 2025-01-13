@@ -1,10 +1,11 @@
 package com.example.backend.Users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserRepository extends JpaRepository<User, String> {
     User findByUsername(String username);
 
@@ -12,10 +13,4 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     List<User> findByUsernameStartingWith(String username);
 
-    User findByEmail(String email);
-
-    @Transactional
-    void deleteByUsername(String username);
-
-    User findByEmailAndUsername(String email, String username);
 }

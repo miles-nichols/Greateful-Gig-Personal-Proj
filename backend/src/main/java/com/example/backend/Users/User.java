@@ -29,28 +29,34 @@ public class User {
 
     private LocalDate birthdate;
 
+    // One user can have many gratitudes (Grat)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Grat> grats;
+    private List<Grat> grats = new ArrayList<>();
 
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name="friends_with",
-            joinColumns={@JoinColumn(name="user_username", referencedColumnName = "username")},
-            inverseJoinColumns={@JoinColumn(name="friend_username", referencedColumnName = "username")})
+    @JoinTable(
+            name="friends_with",  // Name of the relationship table
+            joinColumns={@JoinColumn(name="user_username", referencedColumnName = "username")},  // Columns in the 'friends_with' table that refer to the 'User' table
+            inverseJoinColumns={@JoinColumn(name="friend_username", referencedColumnName = "username")}  // Columns for friends
+    )
     @JsonIgnore
     private Set<User> friends = new HashSet<User>();
 
-    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name="followers",
-            joinColumns={@JoinColumn(name="following_username")},
-            inverseJoinColumns={@JoinColumn(name="follower_username")})
-    @JsonIgnore
-    private Set<User> followers = new HashSet<User>();
 
+    // Many-to-many relationship: User can follow other users
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "followers",
+            joinColumns = {@JoinColumn(name = "following_username")},
+            inverseJoinColumns = {@JoinColumn(name = "follower_username")})
+    @JsonIgnore
+    private Set<User> followers = new HashSet<>();
+
+    // Many-to-many relationship: User is followed by other users
     @ManyToMany(mappedBy = "followers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
     private Set<User> following = new HashSet<>();
 
+    // Constructors
     public User() { }
 
     public User(String username, String password, String email, LocalDate birthdate) {
@@ -60,6 +66,7 @@ public class User {
         this.birthdate = birthdate;
     }
 
+    // Getters and setters
     public String getUsername() {
         return username;
     }
@@ -120,5 +127,15 @@ public class User {
 
     public boolean isFollowing(User other_user){
         return (other_user.getFollowers().contains(this));
+    }
+
+    public void addFriend(User friend) {
+        friends.add(friend);
+        friend.getFriends().add(this);
+    }
+
+    public void removeFriend(User friend) {
+        friends.remove(friend);
+        friend.getFriends().remove(this);
     }
 }
