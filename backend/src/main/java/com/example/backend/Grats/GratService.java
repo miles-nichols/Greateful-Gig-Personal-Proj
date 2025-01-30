@@ -30,14 +30,14 @@ public class GratService {
         }
     }
 
-    // Get all Grats for a specific user
-    public List<Grat> getGratsByUser(String username) {
-        return gratRepository.findAllByUsers_UsernameIn(List.of(username));
-    }
-
     public List<Grat> getGratsForUserAndFriends(String username) {
         List<Grat> grats = gratRepository.findGratsForUserAndFriends(username);
         System.out.println("Retrieved grats: " + grats);
         return grats;
+    }
+
+    public List<Grat> getGratsByUser(String username) {
+        // Ensure this calls the correct repository method
+        return gratRepository.findByUserUsernameOrderByGratDateDesc(username);
     }
 }

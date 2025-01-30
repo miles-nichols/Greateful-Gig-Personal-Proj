@@ -20,4 +20,8 @@ public interface GratRepository extends JpaRepository<Grat, Long> {
 
 
     List<Grat> findAllByUsers_UsernameIn(List<String> usernames);
+
+    @Query("SELECT g FROM Grat g WHERE g.user.username = :username ORDER BY g.gratDate DESC")
+    List<Grat> findByUserUsernameOrderByGratDateDesc(@Param("username") String username);
+
 }
